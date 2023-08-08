@@ -72,10 +72,16 @@ const Navbar = () => {
                   className="border-0"
                 />
               </li>
-              <li className="text-xs cursor-pointer hover:scale-105 capitalizep">
+              <li
+                onClick={() => setToggle(false)}
+                className="text-xs cursor-pointer hover:scale-105 capitalizep"
+              >
                 <Link href="/products">All Products</Link>
               </li>
-              <li className="text-xs cursor-pointer hover:scale-105 capitalizep">
+              <li
+                onClick={() => setToggle(false)}
+                className="text-xs cursor-pointer hover:scale-105 capitalizep"
+              >
                 <Link href="/categories">Categories</Link>
               </li>
               {/* <li className="text-xs flex items-center gap-1 cursor-pointer hover:scale-105 ">

@@ -4,7 +4,7 @@ import Buttons from "../Button/Button";
 
 const HeroSection = () => {
   return (
-    <div className="max-w-[80%] mx-auto pt-[10rem] mb-14 ">
+    <div className="max-w-[80%] mx-auto pt-[5rem] sm:pt-[10rem] mb-14 ">
       <div className="flex justify-between items-center gap-16 pt-[3rem]  sm:flex-nowrap flex-wrap pb-[6rem] ">
         <div className="sm:w-1/2 w-full sm:order-1 order-2 ">
           <p className=" text-[#F8DE7E]   md:text-7xl text-4xl font-bold">

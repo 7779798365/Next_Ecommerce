@@ -14,11 +14,11 @@ const CartItem = ({ item }: { item: any }) => {
   };
 
   return (
-    <div className="pt-8 grid grid-cols-6 items-center gap-4 text-center ">
+    <div className="pt-8 grid grid-cols-3 sm:grid-cols-6  items-center gap-4 text-center ">
       <div className="mx-auto">
         <Image
-          alt={item?.mainImage}
-          src="/cc-1.webp"
+          alt="cart image"
+          src={item?.mainImage}
           width={50}
           height={50}
           className="rounded-lg"

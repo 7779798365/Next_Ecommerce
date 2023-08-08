@@ -26,7 +26,7 @@ const SingleProduct = ({ product }: { product: any }) => {
     <div className="max-w-[80%] mx-auto py-48 flex items-start sm:flex-nowrap flex-wrap  gap-8 ">
       <div className="sm:w-[50%] w-full  m-auto">
         <Image
-          className="sm:w-[400px] w-full md:h-auto h-[500px]"
+          className="w-auto sm:w-[400px]  md:h-auto h-[300px] mx-auto object-contain sm:h-[500px]"
           src={mainImage}
           alt="product"
           width="500"

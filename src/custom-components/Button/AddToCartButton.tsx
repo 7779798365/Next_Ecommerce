@@ -9,6 +9,7 @@ import { useAppDispatch } from "@/redux/hooks";
 const AddToCartButton = ({ product }: { product: any }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+
   const addToCart = () => {
     dispatch(addItem(product));
     setIsClick(!isClick);

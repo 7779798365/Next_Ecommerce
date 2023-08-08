@@ -15,22 +15,25 @@ const Cart = () => {
   const clear = () => {
     dispatch(clearItems());
   };
+
   return (
     <>
       <li
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
         className="text-xs flex items-center gap-1 cursor-pointer hover:scale-105 relative "
       >
         <FiShoppingCart className="text-base font-black" />
         <p className="text-lg">Cart</p>
-        <span className="text-[11px] bg-[#F8DE7E] absolute right-[-20px] top-[-12px] text-white rounded-full px-[9px] py-[3px]">
+        <span className="text-[11px] bg-white sm:bg-[#F8DE7E] absolute right-[-20px] top-[-12px] text-[#F8DE7E] sm:text-white rounded-full px-[9px] py-[3px]">
           {cartItems && cartItems?.length}
         </span>
       </li>
       {isOpen && (
         <div
           className={
-            " w-screen max-w-2xl right-0 absolute top-0 bg-white h-[53.6rem] shadow-xl delay-400 duration-700 ease-in-out transform transition-all p-6 " +
+            " w-[93.5vw] sm:max-w-2xl right-0 absolute top-0 bg-white h-[90vh] sm:h-screen shadow-xl delay-400 duration-700 ease-in-out transform transition-all p-6 overflow-y-scroll " +
             (isOpen ? " translate-x-0 " : " translate-x-full ")
           }
         >

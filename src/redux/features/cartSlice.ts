@@ -18,7 +18,6 @@ export const cartSlice = createSlice({
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
       }
-      console.log("itemInCart>>>>", action.payload);
     },
     incrementQuantity: (state, action) => {
       const item = state.cart.find((item: any) => item.id === action.payload);
