@@ -12,7 +12,7 @@ const CategoryCard = ({ data }: { data: Category }) => {
           alt="category"
           width="200"
           height="200"
-          className=" object-none"
+          className="object-contain"
         />
         <p className="text-lg font-bold">{name}</p>
       </div>
