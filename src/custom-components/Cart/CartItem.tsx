@@ -6,10 +6,13 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { getSubString } from "@/lib/helpers";
 import { useAppDispatch } from "@/redux/hooks";
 import { removeItem } from "@/redux/features/cartSlice";
+import { deleteItem } from "@/app/(user)/fetchData";
 
-const CartItem = ({ item }: { item: any }) => {
+const CartItem = ({ item }: { item: CartItemProps }) => {
   const dispatch = useAppDispatch();
+
   const remove = () => {
+    deleteItem(item?.product_id);
     dispatch(removeItem(item?.id));
   };
 
@@ -18,7 +21,7 @@ const CartItem = ({ item }: { item: any }) => {
       <div className="mx-auto">
         <Image
           alt="cart image"
-          src={item?.mainImage}
+          src={item?.product_image}
           width={50}
           height={50}
           className="rounded-lg"
@@ -26,10 +29,12 @@ const CartItem = ({ item }: { item: any }) => {
       </div>
 
       <p className="text-xs col-span-2 ">
-        {getSubString(item?.description, 40)}
+        {getSubString(item?.product_description, 40)}
       </p>
-      <Quantity quantity={item?.quantity} id={item?.id} />
-      <p className="text-end">${item?.price * item?.quantity}</p>
+      <Quantity quantity={item?.product_quantity} id={item?.product_id} />
+      <p className="text-end">
+        ${item?.product_price * item?.product_quantity}
+      </p>
       <div onClick={remove} className="flex justify-center">
         <BsFillTrashFill size={20} color="#F8DE7E" className="cursor-pointer" />
       </div>

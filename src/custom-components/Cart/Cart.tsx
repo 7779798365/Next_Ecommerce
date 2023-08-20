@@ -1,26 +1,49 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { CgClose } from "react-icons/cg";
 import CartItem from "./CartItem";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { calculateItemsTotal } from "@/lib/helpers";
-import { clearItems } from "@/redux/features/cartSlice";
+import { addItem, clearItems } from "@/redux/features/cartSlice";
 import Link from "next/link";
+
+import { deleteAllItems, getCartItems } from "@/app/(user)/fetchData";
+import { getCookie } from "cookies-next";
+
 const Cart = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [name, setName] = useState<string | null | undefined>("");
   const cartItems = useAppSelector((state) => state?.cartReducer?.cart);
   const dispatch = useAppDispatch();
   const clear = () => {
     dispatch(clearItems());
+    deleteAllItems();
   };
+  useEffect(() => {
+    const getData = async () => {
+      const items = await getCartItems();
+      dispatch(addItem(items?.data));
+    };
+    getData();
+
+    // getting cookie value
+    const userName = getCookie("user_name");
+    if (userName !== undefined || userName !== null) {
+      setName(userName as string);
+    }
+  }, []);
 
   return (
     <>
       <li
         onClick={() => {
-          setIsOpen(!isOpen);
+          if (name !== "" && name !== undefined) {
+            setIsOpen(!isOpen);
+          } else {
+            alert("Please Login First! ");
+          }
         }}
         className="text-xs flex items-center gap-1 cursor-pointer hover:scale-105 relative "
       >
@@ -54,7 +77,7 @@ const Cart = () => {
             {cartItems && cartItems?.length === 0 ? (
               <div className="mt-4">Your Cart is Empty</div>
             ) : (
-              cartItems?.map((item: any, i: number) => (
+              cartItems?.map((item: CartItemProps, i: number) => (
                 <CartItem key={i} item={item} />
               ))
             )}
@@ -68,7 +91,12 @@ const Cart = () => {
                 Clear Cart
               </Button>
               <Link href="/checkout">
-                <Button className="bg-[#F8DE7E]">Checkout</Button>
+                <Button
+                  onClick={() => setIsOpen(false)}
+                  className="bg-[#F8DE7E]"
+                >
+                  Checkout
+                </Button>
               </Link>
             </div>
             <div className="pe-12 ">

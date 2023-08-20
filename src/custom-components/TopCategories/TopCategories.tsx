@@ -16,7 +16,7 @@ const TopCategories = async () => {
     <div className="md:w-11/12 w-full mx-auto py-12 px-8 ">
       <h1 className="text-xl font-semibold">Shop Our Top Categories</h1>
       <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4 my-8">
-        {categories?.slice(0, 4)?.map((category: any, i: number) => (
+        {categories?.slice(0, 4)?.map((category: Category, i: number) => (
           <CategoryCard category={category} key={i} />
         ))}
       </div>

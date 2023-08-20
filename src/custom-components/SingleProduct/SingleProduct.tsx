@@ -6,20 +6,51 @@ import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Rating from "../Rating/Rating";
 import { addItem, removeItem } from "@/redux/features/cartSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { getCookie } from "cookies-next";
+import { addToCartItem, deleteItem } from "@/app/(user)/fetchData";
 
 const SingleProduct = ({ product }: { product: any }) => {
   const [isClick, setIsClick] = useState<boolean>(false);
-  const { name, description, price, rating, mainImage } = product;
-
+  const { id, name, description, price, rating, mainImage } = product;
+  const cartItems = useAppSelector((state) => state?.cartReducer?.cart);
+  const userName = getCookie("user_name");
   const dispatch = useAppDispatch();
-  const addToCart = () => {
-    dispatch(addItem(product));
-    setIsClick(!isClick);
+  // const addToCart = () => {
+  //   dispatch(addItem(product));
+  //   setIsClick(!isClick);
+  // };
+
+  const handleAddToCart = async () => {
+    if (userName !== "" && userName !== undefined) {
+      const itemInCart = cartItems?.find(
+        (item: CartItemProps) => item?.product_id === product?.id
+      );
+
+      if (!itemInCart) {
+        const res = await addToCartItem(
+          id,
+          name,
+          mainImage,
+          description,
+          price
+        );
+
+        if (res) {
+          setIsClick(!isClick);
+          window.location.reload();
+        }
+      } else {
+        alert("Item already added");
+      }
+    } else {
+      alert("Please Login First! ");
+    }
   };
 
   const remove = () => {
-    dispatch(removeItem(product?.id));
+    deleteItem(id);
+    dispatch(removeItem(id));
     setIsClick(!isClick);
   };
   return (
@@ -47,7 +78,7 @@ const SingleProduct = ({ product }: { product: any }) => {
           <Buttons text="Buy Now" />
           {!isClick ? (
             <Button
-              onClick={addToCart}
+              onClick={handleAddToCart}
               className="border bg-white text-[#F8DE7E] border-[#F8DE7E]"
             >
               <ShoppingCart className="mr-2 h-4 w-4 text-[#F8DE7E] " /> Add to

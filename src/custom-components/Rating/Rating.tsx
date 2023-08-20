@@ -2,7 +2,7 @@
 import React from "react";
 import ReactStars from "react-stars";
 
-const Rating = ({ rating }: { rating: any }) => {
+const Rating = ({ rating }: { rating: Rating }) => {
   return (
     <div className="flex items-center gap-2">
       <ReactStars

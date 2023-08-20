@@ -1,3 +1,4 @@
+import { updateItem } from "@/app/(user)/fetchData";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -9,31 +10,39 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItem: (state: any, action: PayloadAction<any>) => {
-      const itemInCart = state.cart.find(
-        (item: any) => item?.id === action.payload?.id
-      );
-      if (itemInCart) {
-        itemInCart.quantity++;
-      } else {
-        state.cart.push({ ...action.payload, quantity: 1 });
-      }
+    addItem: (state, action: PayloadAction<CartItemProps>) => {
+      // const itemInCart = state.cart.find(
+      //   (item: any) => item?.id === action.payload?.id
+      // );
+      // if (itemInCart) {
+      //   itemInCart.quantity++;
+      // } else {
+      //   state.cart.push({ ...action.payload, quantity: 1 });
+      // }
+
+      state.cart = action.payload;
     },
     incrementQuantity: (state, action) => {
-      const item = state.cart.find((item: any) => item.id === action.payload);
-      item.quantity++;
+      const seletedItem = state.cart.find(
+        (item: CartItemProps) => item.product_id === action.payload
+      );
+      seletedItem.product_quantity++;
+      updateItem(seletedItem?.product_id, seletedItem.product_quantity);
     },
     decrementQuantity: (state, action) => {
-      const item = state.cart.find((item: any) => item.id === action.payload);
-      if (item.quantity === 1) {
-        item.quantity = 1;
+      const seletedItem = state.cart.find(
+        (item: CartItemProps) => item.product_id === action.payload
+      );
+      if (seletedItem.product_quantity == 1) {
+        seletedItem.product_quantity = 1;
       } else {
-        item.quantity--;
+        seletedItem.product_quantity--;
       }
+      updateItem(seletedItem?.product_id, seletedItem.product_quantity);
     },
     removeItem: (state, action) => {
       const removeItem = state.cart.filter(
-        (item: any) => item.id !== action.payload
+        (item: CartItemProps) => item.id !== action.payload
       );
       state.cart = removeItem;
     },

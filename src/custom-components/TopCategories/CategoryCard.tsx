@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const CategoryCard = ({ category }: { category: any }) => {
+const CategoryCard = ({ category }: { category: Category }) => {
   const { slug, name, image } = category;
   return (
     <Link href={`/categories/${slug}`}>

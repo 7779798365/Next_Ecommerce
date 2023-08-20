@@ -6,7 +6,13 @@ import {
   decrementQuantity,
 } from "@/redux/features/cartSlice";
 
-const Quantity = ({ quantity, id }: { quantity: any; id: any }) => {
+const Quantity = ({
+  quantity,
+  id,
+}: {
+  quantity: number | string;
+  id: number | string;
+}) => {
   const dispatch = useAppDispatch();
 
   const increment = () => {

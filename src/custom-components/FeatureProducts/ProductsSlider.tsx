@@ -12,7 +12,7 @@ const slideStyles: CSSProperties = {
   maxWidth: "350px",
 };
 
-const ProductsSlider = ({ products }: { products: any }) => {
+const ProductsSlider = ({ products }: { products: Product[] }) => {
   const sliderSettings: SwiperOptions = {
     modules: [Navigation, A11y, Autoplay],
     spaceBetween: 20,
@@ -26,7 +26,7 @@ const ProductsSlider = ({ products }: { products: any }) => {
   return (
     <div className="h-full w-full my-8">
       <Swiper {...sliderSettings} className="h-full w-full">
-        {products.map((product: any, i: number) => (
+        {products.map((product: Product, i: number) => (
           <SwiperSlide key={i} style={slideStyles}>
             <ProductCard product={product} />
           </SwiperSlide>

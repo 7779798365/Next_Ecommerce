@@ -13,7 +13,7 @@ import Link from "next/link";
 import Rating from "../Rating/Rating";
 import { getSubString } from "@/lib/helpers";
 
-const ProductCard = ({ product }: { product: any }) => {
+const ProductCard = ({ product }: { product: Product }) => {
   const { name, description, price, rating, slug, mainImage } = product;
 
   return (

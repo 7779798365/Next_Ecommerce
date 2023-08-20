@@ -1,16 +1,39 @@
 import React from "react";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
+import getStripePromise from "@/lib/stripe";
 
-const PaymentCard = () => {
+const PaymentCard = ({
+  subTotal,
+  products,
+}: {
+  subTotal: number | string | undefined;
+  products: CheckoutItem[] | undefined;
+}) => {
+  const handleCheckout = async () => {
+    if (products) {
+      const stripe = await getStripePromise();
+      const response = await fetch("/api/checkout-session/", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        cache: "no-cache",
+        body: JSON.stringify(products),
+      });
+
+      const data = await response.json();
+      if (data.session) {
+        stripe?.redirectToCheckout({ sessionId: data.session.id });
+      }
+    }
+  };
+
   return (
     <Card className="w-full border-[#F8DE7E] px-6">
       <CardHeader>
@@ -49,29 +72,32 @@ const PaymentCard = () => {
         <div className="w-full">
           <span className="flex justify-between items-center py-2">
             <p className="font-bold">SubTotal</p>
-            <p className="font-bold">$100</p>
+            <p className="font-bold">${subTotal ? subTotal : "00"}</p>
           </span>
           <span className="flex justify-between items-center py-2">
             <p className="font-bold">Tax(10%)</p>
-            <p className="font-bold">$100</p>
+            <p className="font-bold">$00</p>
           </span>
           <span className="flex justify-between items-center py-2">
             <p className="font-bold">Coupon Discount</p>
-            <p className="font-bold">-$100</p>
+            <p className="font-bold">-$00</p>
           </span>
           <span className="flex justify-between items-center py-2">
             <p className="font-bold">Shipping Cost</p>
-            <p className="font-bold">-$100</p>
+            <p className="font-bold">-$00</p>
           </span>
           <hr className=" w-[100%] mx-auto" />
           <span className="flex justify-between items-center py-2">
             <p className="font-bold">Total</p>
-            <p className="font-bold">$100</p>
+            <p className="font-bold">${subTotal ? subTotal : "00"}</p>
           </span>
         </div>
         <div className="w-full">
-          <button className="bg-[#F8DE7E] text-white rounded-3xl px-4 py-2 my-2 text-center w-full cursor-pointer hover:scale-95  ">
-            Pay($100)
+          <button
+            onClick={handleCheckout}
+            className="bg-[#F8DE7E] text-white rounded-3xl px-4 py-2 my-2 text-center w-full cursor-pointer hover:scale-95  "
+          >
+            Pay(${subTotal ? subTotal : "00"})
           </button>
         </div>
       </CardFooter>
