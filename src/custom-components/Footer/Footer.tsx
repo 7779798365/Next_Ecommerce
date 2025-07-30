@@ -15,7 +15,7 @@ const Footer = () => {
           </p>
           {/* </Link> */}
           <p className="uppercase lg:text-xs text-base font-semibold py-4">
-            @{new Date().getFullYear()} Aneeq Khatri. All Rights Reserved{" "}
+            @{new Date().getFullYear()} Muhammad Moosa. All Rights Reserved{" "}
           </p>
           <div className="flex items-center gap-4 flex-wrap ">
             <div>
